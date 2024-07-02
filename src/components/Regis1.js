@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 export default function Regis1() {
@@ -13,7 +14,9 @@ export default function Regis1() {
   const [selectedOption, setSelectedOption] = useState('');
   const [selectedOption1, setSelectedOption1] = useState('');
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+   
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -87,7 +90,7 @@ return (
 <body   Style="background-color: rgb(130, 106, 251);">
   <div class="myclass ">
 <section class="container1">
-  <header>Registration Form</header>
+ <center> <header  style={{ fontSize:'250%' }}>Registration Form</header></center>
   <form action="#" class="form" onSubmit={handleSubmit}>
     <div class="input-box">
       <label>First Name</label>
@@ -100,7 +103,7 @@ return (
       onChange={handleChange}
        placeholder="Enter First name"
     />
-    {errors.fname && <span className="error-message">{errors.fname}</span>}
+    {errors.fname && <span className="error-message" style={{ color: 'red' }}>{errors.fname}</span>}
     </div>
 
     <div class="input-box">
@@ -114,7 +117,7 @@ return (
       onChange={handleChange}
       placeholder="Enter Last name"
     />
-    {errors.lname && <span className="error-message">{errors.lname}</span>}
+    {errors.lname && <span className="error-message" style={{ color: 'red' }}>{errors.lname}</span>}
     </div>
 
     <div class="input-box">
@@ -129,7 +132,7 @@ return (
       onChange={handleChange}
       placeholder="Enter email address"
     />
-    {errors.email && <span className="error-message">{errors.email}</span>}
+    {errors.email && <span className="error-message error-danger" style={{ color: 'red' }}>{errors.email}</span>}
     </div>
 
     
@@ -164,14 +167,17 @@ return (
        
       </div>
     </div>
-    {errors.radiob && <span className="error-message">{errors.radiob}</span>}
+    {errors.radiob && <span className="error-message" style={{ color: 'red' }}>{errors.radiob}</span>}
    
     
   
     <button>Submit</button>
     <button  type="button"
         className="btn btn-outline-warning"
-        onClick={handleClearClick}>clear</button>
+        onClick={handleClearClick}>clear</button><br></br>
+         <div class="sign_up">
+       All Ready member? <Link to="/login">Login now</Link>
+      </div>
   </form>
 </section>
 </div>

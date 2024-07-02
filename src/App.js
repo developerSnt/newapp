@@ -4,6 +4,7 @@ import './App.css';
 import React, { Component } from 'react'
 import NavBar from './components/NavBar';
 import News from './components/News';
+import login from './components/login';
 import {
   BrowserRouter as  Router,
   Routes,
@@ -17,6 +18,7 @@ import About from './components/About';
 import GetData from './components/GetData';
 import Registaration from './components/Registaration';
 import Regis1 from './components/Regis1';
+import Login1 from './components/Login1';
 export default class App extends Component {
   state = {
     progress:0
@@ -32,7 +34,7 @@ export default class App extends Component {
       
       <div>
          
-      
+     
       <Router>
           <NavBar />
           <LoadingBar
@@ -54,6 +56,8 @@ export default class App extends Component {
             {/* <Route path='/getdata' element={<GetData></GetData>}></Route> */}
             <Route path='/regis' element={<Registaration></Registaration>}></Route>
             <Route path='/regis1' element={<Regis1></Regis1>}></Route>
+            <Route path='/login' element={<Login1></Login1>}></Route>
+            
           </Routes>
         </Router>
       </div>

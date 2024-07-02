@@ -38,8 +38,9 @@ export class NavBar extends Component {
     <Link className="nav-link navbar-brand text-light" to='/science' >science</Link>
     <Link className="nav-link navbar-brand text-light" to='/sports' >sports</Link>
     <Link className="nav-link navbar-brand text-light" to='/technology' >technology</Link>
-    <Link className="nav-link navbar-brand text-light" to='/regis' >Rgistration</Link>
-    <Link className="nav-link navbar-brand text-light" to='/regis1' >Rgistration1</Link>
+    
+    <Link className="nav-link navbar-brand text-light" to='/regis1' >Rgistration</Link>
+    <Link className="nav-link navbar-brand text-light" to='/login' >Login</Link>
 </ul>
  
   </div>
