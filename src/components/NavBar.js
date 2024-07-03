@@ -9,7 +9,7 @@ export class NavBar extends Component {
     return (
         <>
         <div>
-        <nav className="navbar  navbar-fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div className="container-fluid">
     <Link className="navbar-brand" to="#">NewsHub</Link>
    
@@ -39,7 +39,7 @@ export class NavBar extends Component {
     <Link className="nav-link navbar-brand text-light" to='/sports' >sports</Link>
     <Link className="nav-link navbar-brand text-light" to='/technology' >technology</Link>
     
-    <Link className="nav-link navbar-brand text-light" to='/regis1' >Rgistration</Link>
+    <Link className="nav-link navbar-brand text-light" to='/regis1' >Registration</Link>
     <Link className="nav-link navbar-brand text-light" to='/login' >Login</Link>
 </ul>
  

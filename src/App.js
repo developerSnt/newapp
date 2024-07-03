@@ -4,7 +4,7 @@ import './App.css';
 import React, { Component } from 'react'
 import NavBar from './components/NavBar';
 import News from './components/News';
-import login from './components/login';
+
 import {
   BrowserRouter as  Router,
   Routes,
@@ -57,7 +57,7 @@ export default class App extends Component {
             <Route path='/regis' element={<Registaration></Registaration>}></Route>
             <Route path='/regis1' element={<Regis1></Regis1>}></Route>
             <Route path='/login' element={<Login1></Login1>}></Route>
-            
+          
           </Routes>
         </Router>
       </div>
