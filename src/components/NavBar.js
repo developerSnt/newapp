@@ -41,6 +41,7 @@ export class NavBar extends Component {
     
     <Link className="nav-link navbar-brand text-light" to='/regis1' >Registration</Link>
     <Link className="nav-link navbar-brand text-light" to='/login' >Login</Link>
+    <Link className="nav-link navbar-brand text-light" to='/login11' >Button</Link>
 </ul>
  
   </div>

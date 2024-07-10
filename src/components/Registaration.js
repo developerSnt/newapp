@@ -22,6 +22,11 @@ export default function Registration() {
     });
   };
 
+
+
+
+  
+
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -37,6 +42,35 @@ export default function Registration() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
+      setFormData({ name: '' });
+     
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      
+      const raw = JSON.stringify({
+        "id": 0,
+        "firstName": document.getElementById('fname').value,
+        "lastName": document.getElementById('lname').value,
+        "email": document.getElementById('email').value,
+        "gender": "F",
+        "age": 34,
+        "certificate": "12th"
+      });
+      
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+      };
+      
+      fetch("https://localhost:7202/api/Registration", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
+
+
+
       console.log('Form submitted successfully!');
       // Add logic here to handle form submission (e.g., API call, data processing)
     } else {

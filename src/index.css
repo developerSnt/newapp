@@ -122,7 +122,10 @@ height: 80%;
 .form button:hover {
   background: rgb(88, 56, 250);
 }
-
+form .policy{
+  display: flex;
+  align-items: center;
+}
 ::selection{
   background: rgba(26,188,156,0.3);
 }

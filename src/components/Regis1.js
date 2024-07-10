@@ -1,47 +1,97 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Rechetu from './Rechetu'; // Assuming Rechetu component is in the same directory
+import apiService from './apiService';
 
 const Regis1 = () => {
   const [formData, setFormData] = useState({
-    fname: '',
-    lname: '',
+    FirstName: '',
+    LastName: '',
     email: '',
-    rediob:'', // Not sure what this is used for
-    chek: '', // Not sure what this is used for
-    ageRange: '',
+    Gender : '',
+    certificate: [],
+    age : '',
+    password: '',
+    comformpassword : '',
   });
 
-  const [selectedOption, setSelectedOption] = useState('');
+//   useEffect(() => {
+//     fetchData();
+//   }, []);
+
+  const [dataList, setDataList] = useState([]);
+
+//   const fetchData = async () => {
+//     try {debugger
+//       const data = await apiService.fetchData();
+//       setDataList(data);
+//     } catch (error) {
+//       console.error('Error fetching data:', error);
+//     }
+//   };
+
   const [errors, setErrors] = useState({});
-  const [selectedAgeRange, setSelectedAgeRange] = useState('');
+  const [isChecked, setIsChecked] = useState(false);
+ 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+    const { name, value, type, checked } = e.target;
+
+    if (type === 'checkbox') {
+      // Handle checkboxes separately to toggle values in the certificate array
+      if (checked) {
+        setFormData({
+          ...formData,
+          certificate: [...formData.certificate, value], // Add the selected value
+        });
+      } else {
+        setFormData({
+          ...formData,
+          certificate: formData.certificate.filter((item) => item !== value), // Remove the deselected value
+        });
+      }
+    } else {
+      // For text inputs, email, etc.
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+      };
+
   const handleAgeRangeChange = (event) => {
-    setSelectedAgeRange(event.target.value);
+    const { value } = event.target;
     setFormData({
       ...formData,
-      ageRange: event.target.value,
+      age : value,
     });
-  };
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = validateForm(formData);
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      console.log('Form submitted successfully!');
-      // Add logic here to handle form submission (e.g., API call, data processing)
+      try {
+         const createdData = await apiService.createData(formData);
+         console.log('Created data:', createdData);
+        setFormData({
+            FirstName: '',
+            LastName: '',
+          email: '',
+          Gender : '',
+          certificate: [],
+          age : '',
+          password: '',
+          comformpassword : '',
+        });
+        console.log(formData);
+        alert("You are Sucessfully Registrtion now you can login.");
+        // fetchData(); // Refresh data list after successful submission
+      } catch (error) {
+        console.error('Error creating data:', error);
+      }
     } else {
       console.log('Form submission failed due to validation errors.');
     }
@@ -50,36 +100,45 @@ const Regis1 = () => {
   const validateForm = (data) => {
     const errors = {};
 
-    if (!data.fname.trim()) {
+    if (!data.FirstName.trim()) {
       errors.fname = 'First name is required';
     }
-    if (!data.lname.trim()) {
-      errors.lname = 'Last name is required';
+    if (!data.LastName.trim()) {
+      errors.LastName = 'Last name is required';
     }
     if (!data.email) {
       errors.email = 'Email is required';
     }
-    if (!selectedOption) {
-      errors.radiob = 'Please select a gender';
+    if (!data. Gender) {
+      errors.Gender = 'Please select a gender';
     }
-    if (!data.ageRange) {
-      errors.ageRange = 'Please select an age range';
-    }
-    else {
-      const selectedAge = parseInt(data.ageRange);
+    if (!data.age ) {
+      errors.age  = 'Please select an age range';
+    } else {
+      const selectedAge = parseInt(data.age );
       if (selectedAge < 18 || selectedAge > 80) {
-        errors.ageRange = 'Age must be between 18 and 80';
+        errors.age  = 'Age must be between 18 and 80';
       }
     }
-    
+    if (!data.password) {
+      errors.password = 'Password is required';
+    } else if (data.password.length < 4) {
+      errors.password = 'Password must be at least 4 characters long';
+    }
+    if (!data.comformpassword ) {
+      errors.comformpassword  = 'Confirm Password is required';
+    } else if (data.password !== data.comformpassword ) {
+      errors.comformpassword  = 'Passwords do not match';
+    }
     return errors;
   };
-
+  
   const handleClearClick = () => {
-    setFormData({ fname: '', lname: '', email: '' , ageRange: ''});
-    setSelectedOption('');
+    setFormData({ FirstName: '', LastName: '', email: '',  Gender: '', certificate: [], age : '', password: '',
+      comformpassword : ''});
     setErrors({});
   };
+
   const ageOptions = [];
   for (let age = 1; age <= 100; age++) {
     ageOptions.push(<option key={age} value={age}>{age}</option>);
@@ -103,31 +162,38 @@ const Regis1 = () => {
               <center>
                 <header style={{ fontSize: '250%' }}>Registration Form</header>
               </center>
+
+              <ul>
+                {dataList.map((data) => (
+                  <li key={data.id}>{data.name}</li>
+                ))}
+              </ul>
+              
               <form action="#" className="form" onSubmit={handleSubmit}>
                 <div className="input-box">
                   <label>First Name</label>
                   <input
                     type="text"
-                    name="fname"
+                    name="FirstName"
                     className="form-input"
-                    value={formData.fname}
+                    value={formData.FirstName}
                     onChange={handleChange}
                     placeholder="Enter First name"
                   />
-                  {errors.fname && <span className="error-message" style={{ color: 'red' }}>{errors.fname}</span>}
+                  {errors.FirstName && <span className="error-message" style={{ color: 'red' }}>{errors.FirstName}</span>}
                 </div>
 
                 <div className="input-box">
                   <label>Last Name</label>
                   <input
                     type="text"
-                    name="lname"
+                    name="LastName"
                     className="form-input"
-                    value={formData.lname}
+                    value={formData.LastName}
                     onChange={handleChange}
                     placeholder="Enter Last name"
                   />
-                  {errors.lname && <span className="error-message" style={{ color: 'red' }}>{errors.lname}</span>}
+                  {errors.LastName&& <span className="error-message" style={{ color: 'red' }}>{errors.lname}</span>}
                 </div>
 
                 <div className="input-box">
@@ -143,34 +209,107 @@ const Regis1 = () => {
                   />
                   {errors.email && <span className="error-message error-danger" style={{ color: 'red' }}>{errors.email}</span>}
                 </div>
+
                 <h3>Gender</h3>
-                <Rechetu name="radiob" value="female"  onChange={ handleOptionChange}
-        checked= {selectedOption === 'female'} />
-                <Rechetu name="radiob" value="male"   onChange={ handleOptionChange}
-        checked= {selectedOption === 'male' }/>
-                {errors.radiob && <span className="error-message" style={{ color: 'red' }}>{errors.radiob}</span>}
-        <div>
-          <labal>Select your age :</labal>
-          <div class="select-box">
-             
-              <select
-                    name="ageRange"
+                <Rechetu
+                  name="Gender"
+                  value="female"
+                  onChange={handleChange}
+                  checked={formData.Gender  === 'female'}
+                />
+              
+                <Rechetu
+                  name="Gender"
+                  value="male"
+                  onChange={handleChange}
+                  checked={formData.Gender  === 'male'}
+                />
+           
+                {errors.Gender && <span className="error-message" style={{ color: 'red' }}>{errors.Gender}</span>}
+
+                <div>
+                  <label>Select your age:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <select
+                    name="age "
                     className="form-input"
-                    value={formData.ageRange}
+                    value={formData.age }
                     onChange={handleAgeRangeChange}
                   >
                     <option value="">Select age range</option>
                     {ageOptions}
                   </select>
-                  {errors.ageRange && <span className="error-message" style={{ color: 'red' }}>{errors.ageRange}</span>}
+                  {errors.age  && <span className="error-message" style={{ color: 'red' }}>{errors.age }</span>}
                 </div>
-            </div>
-      
-               
+
+                <br />
+                <label>Select your Certificate:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div className="policy">
+                  <input
+                    type="checkbox"
+                    name="certificate"
+                    value="10th"
+                    checked={formData.certificate.includes('10th')}
+                    onChange={handleChange}
+                  />
+                  <label className="form-check-label">10th Marksheet</label>
+                </div>
+
+                <div className="policy">
+                  <input
+                    type="checkbox"
+                    name="certificate"
+                    value="12th"
+                    checked={formData.certificate.includes('12th')}
+                    onChange={handleChange}
+                  />
+                  <label className="form-check-label">12th marksheet</label>
+                </div>
+
+                <div className="policy">
+                  <input
+                    type="checkbox"
+                    name="certificate"
+                    value="other"
+                    checked={formData.certificate.includes('other')}
+                    onChange={handleChange}
+                  />
+                  <label className="form-check-label">Other Certificate</label>
+                </div>
+
+                <div className="input-box">
+                    <label>Password</label>
+                    <input
+                      type="password"
+                      name="password"
+                      className="form-input"
+                      value={formData.password}
+                      onChange={handleChange}
+                      placeholder="Enter password"
+                    />
+                    {errors.password && <span className="error-message" style={{ color: 'red' }}>{errors.password}</span>}
+                  </div>
+
+                  <div className="input-box">
+                    <label>Confirm Password</label>
+                    <input
+                      type="password"
+                      name="comformpassword"
+                      className="form-input"
+                      value={formData.comformpassword}
+                      onChange={handleChange}
+                      placeholder="Confirm password"
+                    />
+                    {errors.comformpassword  && <span className="error-message" style={{ color: 'red' }}>{errors.comformpassword}</span>}
+                  </div>
+                <br />
+                <br />
+
                 <button type="submit">Submit</button>
                 <button type="button" className="btn btn-outline-warning" onClick={handleClearClick}>Clear</button>
+
                 <br />
                 <br />
+
                 <div className="sign_up">
                   Already a member? <Link to="/login">Login now</Link>
                 </div>
