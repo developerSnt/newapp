@@ -3,7 +3,17 @@ import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Paginator } from 'primereact/paginator';
- 
+const express = require('express');
+const cors = require('cors');
+const app = express();
+
+app.use(cors({
+  origin: 'https://newapp-b5wt.onrender.com',  // Allow requests from this origin
+  credentials: true  // If you need cookies or authorization headers to be sent
+}));
+
+// Other middleware and routes
+
 const About = () => {
     const [currentData, setCurrentData] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
@@ -15,7 +25,13 @@ const About = () => {
     const fetchData = async (page, size) => {
         try {
             setLoading(true);
-            const response = await fetch(`https://localhost:7299/api/data?page=${page}&pageSize=${size}`);
+            const response = await fetch(`https://localhost:7299/api/data?page=${page}&pageSize=${size}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': 'https://newapp-b5wt.onrender.com',
+                },
+            });
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
