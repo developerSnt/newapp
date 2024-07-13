@@ -1,4 +1,5 @@
 
+
 import './App.css';
 
 import React, { Component } from 'react'
@@ -21,6 +22,8 @@ import Regis1 from './components/Regis1';
 import Login1 from './components/Login1';
 
 import Red from './components/Red';
+import TabalData from './components/TabalData';
+
 export default class App extends Component {
   state = {
     progress:0
@@ -60,7 +63,7 @@ export default class App extends Component {
             <Route path='/regis1' element={<Regis1></Regis1>}></Route>
             <Route path='/login' element={<Login1></Login1>}></Route>
             <Route path='/login11' element={<Red></Red>}></Route>
-           
+            <Route path='/Data' element={<TabalData></TabalData>}></Route>
           </Routes>
         </Router>
       </div>

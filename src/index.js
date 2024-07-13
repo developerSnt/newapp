@@ -4,6 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+
+import 'primereact/resources/primereact.css';
+import { PrimeReactProvider } from 'primereact/api';
+
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+
+import './flags.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

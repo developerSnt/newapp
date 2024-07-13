@@ -1,42 +1,55 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import PaginationComponent from './PaginationComponent';
 
-export default function rediobutton() {
-    handleChange = e => {
-        const { name, value } = e.target;
-    
-        this.setState({
-          [name]: value
-        });
-      };
-  return (
-  
-    <div className="radio-buttons">
+const DataListComponent = () => {
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
-<br></br><br></br><br></br><br></br>
-    Windows
-    <input
-      id="windows"
-      value="windows"
-      name="platform"
-      type="radio"
-      onChange={this.handleChange}
-    />
-    Mac
-    <input
-      id="mac"
-      value="mac"
-      name="platform"
-      type="radio"
-      onChange={this.handleChange}
-    />
-    Linux
-    <input
-      id="linux"
-      value="linux"
-      name="platform"
-      type="radio"
-      onChange={this.handleChange}
-    />
-  </div>
-  )
-}
+    useEffect(() => {
+        fetchData();
+    }, [currentPage]);
+
+    const fetchData = async () => {
+        try {
+            // Replace with your API endpoint
+            const response = await fetch(`https://api.example.com/data?page=${currentPage}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const result = await response.json();
+            setData(result.data); // Assuming API returns { data: [], totalPages: }
+            setTotalPages(result.totalPages); // Assuming API returns total pages count
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handlePageChange = (page) => {
+        if (page < 1 || page > totalPages) return;
+        setCurrentPage(page);
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <div>
+            <h1>Data List</h1>
+            <ul>
+                {data.map(item => (
+                    <li key={item.id}>
+                        {item.name} - {item.description}
+                    </li>
+                ))}
+            </ul>
+            <PaginationComponent currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+        </div>
+    );
+};
+
+export default DataListComponent;
