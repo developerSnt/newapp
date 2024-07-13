@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Rechetu from './Rechetu'; // Assuming Rechetu component is in the same directory
 import apiService from './apiService';
 
@@ -14,13 +14,13 @@ const Regis1 = () => {
     password: '',
     comformpassword : '',
   });
-
+const navigate=useNavigate()
 //   useEffect(() => {
 //     fetchData();
 //   }, []);
 
   const [dataList, setDataList] = useState([]);
-
+ 
 //   const fetchData = async () => {
 //     try {debugger
 //       const data = await apiService.fetchData();
@@ -88,6 +88,8 @@ const Regis1 = () => {
         });
         console.log(formData);
         alert("You are Sucessfully Registrtion now you can login.");
+        
+        navigate('/login');
         // fetchData(); // Refresh data list after successful submission
       } catch (error) {
         console.error('Error creating data:', error);

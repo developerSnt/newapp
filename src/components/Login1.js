@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import { Link} from 'react-router-dom';
 
-const Login1 = () => {
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import NavBar from './NavBar';
+
+const Login1 = ({ setFirstName }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
-
   const [errors, setErrors] = useState({});
-  
+
+  const [firstName, setLocalFirstName] = useState(''); // Local state to hold the user's first name
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,21 +29,20 @@ const Login1 = () => {
     if (Object.keys(newErrors).length === 0) {
       try {
         const response = await fetch(`https://localhost:7299/api/Login?email=${encodeURIComponent(formData.email)}&password=${encodeURIComponent(formData.password)}`);
-        const data = await response.text();
+        const data = await response.json();
 
         if (response.ok) {
           console.log('Login successful:', data);
+          setFirstName(data.userName); // Set firstName using setFirstName prop
+          setLocalFirstName(data.userName); // Update local firstName state
           alert("Login successfully");
-       
         } else {
           console.error('Login failed:', data);
           setErrors({ password: 'Invalid username or password' });
-         
         }
       } catch (error) {
         console.error('Invalid username or password:', error);
         setErrors({ password: 'Invalid username or password' });
-        
       }
     } else {
       console.log('Form submission failed due to validation errors.');
@@ -111,10 +112,15 @@ const Login1 = () => {
               Not a member? <Link to="/regis1">Signup now</Link>
             </div>
           </form>
+          {/* Display firstName here */}
+          {/* <h1 color="white">Welcome : {firstName}</h1> */}
         </section>
+        {/* Pass firstName to NavBar */}
+        <NavBar user={firstName} />
       </div>
     </div>
   );
-}
+};
 
 export default Login1;
+
