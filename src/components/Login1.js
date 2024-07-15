@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
 
 const Login1 = ({ setFirstName }) => {
@@ -9,9 +9,11 @@ const Login1 = ({ setFirstName }) => {
     password: ''
   });
   const [errors, setErrors] = useState({});
-
-  const [firstName, setLocalFirstName] = useState(''); // Local state to hold the user's first name
-
+useEffect(()=>{
+  sessionStorage.clear();
+},[]);
+ 
+  const navigate=useNavigate()
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -33,9 +35,13 @@ const Login1 = ({ setFirstName }) => {
 
         if (response.ok) {
           console.log('Login successful:', data);
-          setFirstName(data.userName); // Set firstName using setFirstName prop
-          setLocalFirstName(data.userName); // Update local firstName state
+         
+          sessionStorage.setItem('firstname', data.userName); 
+    setFirstName(data.userName); // Set firstName using setFirstName prop
+    
           alert("Login successfully");
+        
+          navigate('/Desc');
         } else {
           console.error('Login failed:', data);
           setErrors({ password: 'Invalid username or password' });
@@ -115,8 +121,7 @@ const Login1 = ({ setFirstName }) => {
           {/* Display firstName here */}
           {/* <h1 color="white">Welcome : {firstName}</h1> */}
         </section>
-        {/* Pass firstName to NavBar */}
-        <NavBar user={firstName} />
+       
       </div>
     </div>
   );

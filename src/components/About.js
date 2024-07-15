@@ -3,6 +3,7 @@ import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Paginator } from 'primereact/paginator';
+import { useNavigate } from 'react-router-dom';
  
 const About = () => {
     const [currentData, setCurrentData] = useState([]);
@@ -11,7 +12,13 @@ const About = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [first, setFirst] = useState(0);
-
+const usenavigate = useNavigate();
+useEffect(() => {
+    let firstname=sessionStorage.getItem('firstname');
+    if(firstname==='' || firstname ===null){
+        usenavigate('/login');
+    }
+},[])
     const fetchData = async (page, size) => {
         try {
             setLoading(true);

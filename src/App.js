@@ -11,11 +11,13 @@ import Regis1 from './components/Regis1';
 import Login1 from './components/Login1';
 import Red from './components/Red';
 import TabalData from './components/TabalData';
+import Desc from './components/Desc';
 
 export default class App extends Component {
+  
   state = {
     progress: 0,
-    firstName: "", // Initialize firstName state
+    firstName: sessionStorage.getItem('firstname') || '',
   };
 
   setProgress = (progress) => {
@@ -25,12 +27,13 @@ export default class App extends Component {
   setFirstName = (firstName) => {
     this.setState({ firstName });
   };
+ 
 
   render() {
     return (
       <div>
         <Router>
-          <NavBar user={this.state.firstName} /> {/* Pass firstName as user prop */}
+          <NavBar user={this.state.firstName} onLogout={() => this.setState({ firstName: '' })}  /> 
           <LoadingBar
             height={3}
             color='#FF3377'
@@ -47,9 +50,10 @@ export default class App extends Component {
             <Route path='/technology' element={<News setProgress={this.setProgress} key='technology' pageSize={8} country='us' category='technology' />} />
             <Route path='/regis' element={<Registaration />} />
             <Route path='/regis1' element={<Regis1 />} />
-            <Route path='/login' element={<Login1 setFirstName={this.setFirstName} />} /> {/* Pass setFirstName as prop */}
+            <Route path='/login' element={<Login1 setFirstName={this.setFirstName} />} /> 
             <Route path='/login11' element={<Red />} />
             <Route path='/Data' element={<TabalData />} />
+            <Route path='/Desc' element={<Desc />} />
           </Routes>
         </Router>
       </div>

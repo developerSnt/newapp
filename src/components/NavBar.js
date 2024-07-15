@@ -1,49 +1,90 @@
-// NavBar.js
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate  } from 'react-router-dom';
 
-const NavBar = ({ user }) => {
+const NavBar = ({ user, onLogout }) => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+ 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+  const navigate=useNavigate()
+  const handleLogout = () => {
+    onLogout(); 
+    setDropdownOpen(false); 
+    navigate('/login');
+  };
+  
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div className="container-fluid">
-      <Link className="navbar-brand" to="#">NewsHub</Link>
-   
-        
-        
-   
- 
-   <ul className="nav nav-pills">
- <li className="nav-item">
-   <Link className="nav-link navbar-brand text-light" aria-current="page" to="/">Home</Link>
- </li>
- <li className="nav-item text-dark">
-  
-   <Link className="nav-link navbar-brand text-light" to='/about' >About As</Link>
-   
-  
- </li>
+        <Link className="navbar-brand" to="/">NewsHub</Link>
 
- <li className="nav-item text-dark">
- <Link className="nav-link navbar-brand text-light" to='/business' > business</Link> </li>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
-   <Link className="nav-link navbar-brand text-light" to='/entertainment' >entertainment</Link>
-   <Link className="nav-link navbar-brand text-light" to='/' >general</Link>
-   <Link className="nav-link navbar-brand text-light" to='/health' >health</Link>
-   <Link className="nav-link navbar-brand text-light" to='/science' >science</Link>
-   <Link className="nav-link navbar-brand text-light" to='/sports' >sports</Link>
-   <Link className="nav-link navbar-brand text-light" to='/technology' >technology</Link>
-   
-   <Link className="nav-link navbar-brand text-light" to='/regis1' >Registration</Link>
-   <Link className="nav-link navbar-brand text-light" to='/login' >Login</Link>
-  
-   
+        <div className={`collapse navbar-collapse ${dropdownOpen ? 'show' : ''}`} id="navbarSupportedContent">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <Link className="nav-link " style={{ color: 'white' }} to="/">Home</Link>
+            </li>
+            {/* <li className="nav-item">
+              <Link className="nav-link" to="/about" style={{ color: 'white' }}>About Us</Link>
+            </li> */}
+            <li className="nav-item">
+              <Link className="nav-link" to="/business" style={{ color: 'white' }}>Business</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/entertainment" style={{ color: 'white' }}>Entertainment</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/" style={{ color: 'white' }}>General</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/health" style={{ color: 'white' }}>Health</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/science" style={{ color: 'white' }}>Science</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/sports" style={{ color: 'white' }}>Sports</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/technology" style={{ color: 'white' }}>Technology</Link>
+            </li>
+          </ul>
 
-       
-        {/* Display user's name here */}
-        <span className="navbar-text text-light">
-          {user ? `Welcome, ${user}` : "Login"}
-        </span>
-        </ul>
+          <ul className="navbar-nav ml-auto">
+            {user ? (
+              <li className="nav-item dropdown">
+                <button
+                  className="btn btn-danger dropdown-toggle"
+                  onClick={toggleDropdown}
+                  aria-expanded={dropdownOpen ? 'true' : 'false'}
+                >
+                  Welcome, {user}
+                </button>
+                <ul className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`} >
+                  <li>
+                    <button className="dropdown-item" onClick={handleLogout} >Logout</button>
+                  </li>
+                </ul>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link className="nav-link" to="/login" style={{ color: 'white' }}>Login</Link>
+              </li>
+            )}
+          </ul>
+        </div>
       </div>
     </nav>
   );
