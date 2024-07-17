@@ -21,17 +21,18 @@ const NavBar = ({ user, onLogout }) => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav className="navbar navbar-expand-lg bg-color" >
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">NewsHub</Link>
+        <Link className="navbar-brand bg-color"  to="/">NewsHub</Link>
 
         <button
           className="navbar-toggler"
+          
           type="button"
           onClick={toggleDropdown1}
           aria-expanded={dropdownOpen1 ? 'true' : 'false'}
           aria-label="Toggle navigation"
-        >
+          style={{ backgroundColor: 'rgb(130, 106, 251)', color: 'white', paddingTop: '10px' }}>
           <span className="navbar-toggler-icon"></span>
         </button>
 

@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const NewsItem = ({ title, description, imageurl, author, date, source, newurl }) => {
- 
+  const isLoggedIn = sessionStorage.getItem('firstname') !== '' && sessionStorage.getItem('firstname') !== null;
+
   return (
     <div>
       <div className="card mt-3 mr-4">
@@ -22,12 +23,15 @@ const NewsItem = ({ title, description, imageurl, author, date, source, newurl }
           <p className="card-text">
             <small className="text-muted">By {!author ? "Unknown" : author} On {new Date(date).toGMTString()}</small>
           </p>
-          <Link to={`/Desc?url=${encodeURIComponent(newurl)}&name=${encodeURIComponent(source)}&tital=${encodeURIComponent(title)}&img=${encodeURIComponent(imageurl)}&date1=${encodeURIComponent(date)}`} className="btn btn-dark">
+          {isLoggedIn ? (
+           <Link  className="bg-color" to={`/Desc?url=${encodeURIComponent(newurl)}&name=${encodeURIComponent(source)}&tital=${encodeURIComponent(title)}&img=${encodeURIComponent(imageurl)}&date1=${encodeURIComponent(date)}`} className="btn btn-dark">
+              Read More
+            </Link> 
+          ) : (
+           <Link className="bg-color" to={`/login`}>
             Read More
           </Link>
-            {/* <Link to={newurl} className="btn btn-dark">
-            Read More
-          </Link> */}
+          )}
         </div>
       </div>
     </div>

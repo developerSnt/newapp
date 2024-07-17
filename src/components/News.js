@@ -51,7 +51,7 @@ const News = ({ country, pageSize, category, setProgress }) => {
   };
 
   const handlePreviousClick = async () => {
-    // Implement your logic here
+   
   };
 
   const handleNextClick = async () => {
