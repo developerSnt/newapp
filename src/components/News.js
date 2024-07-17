@@ -75,7 +75,7 @@ const News = ({ country, pageSize, category, setProgress }) => {
             {articles.map((element, index) => (
               <div className="col-md-3" key={index}>
                 <NewsItem
-                  title={element.title ? element.title.slice(0, 45) : ''}
+                  title={element.title }
                   description={element.description ? element.description.slice(0, 10000000) : ''}
                   imageurl={element.urlToImage}
                   newurl={element.url}

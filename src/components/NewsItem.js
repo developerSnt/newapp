@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const NewsItem = ({ title, description, imageurl, author, date, source }) => {
+const NewsItem = ({ title, description, imageurl, author, date, source, newurl }) => {
  
   return (
     <div>
@@ -22,9 +22,12 @@ const NewsItem = ({ title, description, imageurl, author, date, source }) => {
           <p className="card-text">
             <small className="text-muted">By {!author ? "Unknown" : author} On {new Date(date).toGMTString()}</small>
           </p>
-          <Link to="/Desc" className="btn btn-dark">
+          <Link to={`/Desc?url=${encodeURIComponent(newurl)}&name=${encodeURIComponent(source)}&tital=${encodeURIComponent(title)}&img=${encodeURIComponent(imageurl)}&date1=${encodeURIComponent(date)}`} className="btn btn-dark">
             Read More
           </Link>
+            {/* <Link to={newurl} className="btn btn-dark">
+            Read More
+          </Link> */}
         </div>
       </div>
     </div>

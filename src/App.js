@@ -33,7 +33,7 @@ export default class App extends Component {
     return (
       <div>
         <Router>
-          <NavBar user={this.state.firstName} onLogout={() => this.setState({ firstName: '' })}  /> 
+          <NavBar user={this.state.firstName} onLogout={() => this.setState({ firstName: '' })}  /> <br></br><br></br>
           <LoadingBar
             height={3}
             color='#FF3377'
