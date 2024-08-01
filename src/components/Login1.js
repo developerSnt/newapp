@@ -12,7 +12,7 @@ const Login1 = ({ setFirstName }) => {
 useEffect(()=>{
   sessionStorage.clear();
 },[]);
- 
+ const [role,setRole]=useState();
   const navigate=useNavigate()
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,10 +38,16 @@ useEffect(()=>{
          
           sessionStorage.setItem('firstname', data.userName); 
     setFirstName(data.userName); // Set firstName using setFirstName prop
-    
+    // setRole(data.role);
           alert("Login successfully");
-        
+        if(setRole(data.role) == "Admin")
+        {
+           navigate('/Desc');
+        }
+        else {
           navigate('/Desc');
+        }
+          // navigate('/Desc');
         } else {
           console.error('Login failed:', data);
           setErrors({ password: 'Invalid username or password' });
@@ -121,7 +127,7 @@ useEffect(()=>{
           {/* Display firstName here */}
           {/* <h1 color="white">Welcome : {firstName}</h1> */}
         </section>
-       
+       {role}
       </div>
     </div>
   );

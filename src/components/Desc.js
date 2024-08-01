@@ -58,6 +58,35 @@ const Desc = () => {
 
   }, [location, navigate]);
 
+  const handlePrint = async () => {
+    try {
+    
+      const response = await fetch(`https://localhost:7299/createpdf?title=${encodeURIComponent(tital)}&description=${encodeURIComponent(content)}&date=${encodeURIComponent(Date1)}&imageUrl=${encodeURIComponent(img)}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: tital,
+          description: content,
+          newsDate: Date1,
+          imageUrl: img,
+        }),
+      });
+
+      if (response.ok) {
+        console.log('PDF creation successful.');
+        // Handle success: e.g., show a success message, redirect, etc.
+      } else {
+        console.error('Failed to create PDF:', response.statusText);
+        // Handle failure: e.g., show an error message
+      }
+    } catch (error) {
+      console.error('Error creating PDF:', error);
+      // Handle network errors or other exceptions
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -65,6 +94,14 @@ const Desc = () => {
   return (
     <div className="container">
       <br /><br />
+      <hr></hr>
+      <br></br>
+      <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button className="bg-color" onClick={handlePrint}>Print</button>
+      </div>
+      <br></br>
+      <hr></hr>
+      <br></br><br></br>
       <center><h1>{tital}</h1></center><br></br>
       <br></br>
       <center><h2>{new Date(Date1).toGMTString()}</h2></center><br></br><br></br>

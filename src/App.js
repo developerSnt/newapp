@@ -12,6 +12,12 @@ import Login1 from './components/Login1';
 import Red from './components/Red';
 import TabalData from './components/TabalData';
 import Desc from './components/Desc';
+import NewsList from './components/NewsList';
+import Insertdata from './components/Insertdata';
+import Update from './components/Update';
+import NewsDetails from './components/NewsDetails';
+import InsertNewsData from './components/InsertNewsData';
+import UpdateNewsData from './components/Updatenewsdata';
 
 export default class App extends Component {
   
@@ -54,6 +60,16 @@ export default class App extends Component {
             <Route path='/login11' element={<Red />} />
             <Route path='/Data' element={<TabalData />} />
             <Route path='/Desc' element={<Desc />} />
+            <Route path='/NewsList' element={<NewsList></NewsList>} />
+            <Route path='/insertdata' element={<Insertdata></Insertdata>} />
+            <Route path='/Updatedata' element={<Update></Update>} />
+           
+        <Route exact path="/" component={NewsList} />
+        <Route path="/update/:id" element={<Update />} />
+        <Route path='/NewsData' element={<NewsDetails></NewsDetails>} />
+        <Route path='/InserNewsdata1' element={<InsertNewsData></InsertNewsData>} />
+        {/* <Route path='/UpdateNewsData' element={<UpdateNewsData></UpdateNewsData>} /> */}
+        <Route path="/UpdateNewsData/:id" element={<UpdateNewsData />} />
           </Routes>
         </Router>
       </div>

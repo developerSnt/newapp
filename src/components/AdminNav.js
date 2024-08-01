@@ -1,28 +1,30 @@
+import React from 'react'
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; //
 
-const NavBar = ({ user, onLogout }) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [dropdownOpen1, setDropdownOpen1] = useState(false);
-  const navigate = useNavigate();
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
-  const toggleDropdown1 = () => {
-    setDropdownOpen1(!dropdownOpen1);
-  };
-
-  const handleLogout = () => {
-    onLogout();
-    setDropdownOpen(false);
-    navigate('/login');
-  };
-
+    const AdminNav = ({ user, onLogout }) => {
+        const [dropdownOpen, setDropdownOpen] = useState(false);
+        const [dropdownOpen1, setDropdownOpen1] = useState(false);
+        const navigate = useNavigate();
+      
+        const toggleDropdown = () => {
+          setDropdownOpen(!dropdownOpen);
+        };
+      
+        const toggleDropdown1 = () => {
+          setDropdownOpen1(!dropdownOpen1);
+        };
+      
+        const handleLogout = () => {
+          onLogout();
+          setDropdownOpen(false);
+          navigate('/login');
+        };
   return (
-    <nav className="navbar navbar-expand-lg bg-color fixed-top" >
+    <div>
+       <nav className="navbar navbar-expand-lg bg-color fixed-top" >
       <div className="container-fluid">
         <Link className="navbar-brand bg-color"  to="/">NewsHub</Link>
 
@@ -96,7 +98,7 @@ const NavBar = ({ user, onLogout }) => {
         </div>
       </div>
     </nav>
-  );
-};
-
-export default NavBar;
+    </div>
+  )
+}
+export default AdminNav;
