@@ -14,7 +14,7 @@ const NewsList = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`git /api/NewList`);
+      const response = await fetch(` /api/NewList`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
