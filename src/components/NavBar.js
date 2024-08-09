@@ -2,38 +2,41 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; //
 
-const NavBar = ({ user, onLogout }) => {
+const NavBar = ({ user, userRole, onLogout }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownOpen1, setDropdownOpen1] = useState(false);
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
+    console.log("Toggling user dropdown");
     setDropdownOpen(!dropdownOpen);
   };
 
   const toggleDropdown1 = () => {
+    console.log("Toggling navigation dropdown");
     setDropdownOpen1(!dropdownOpen1);
   };
 
   const handleLogout = () => {
+    console.log("Logging out...");
     onLogout();
     setDropdownOpen(false);
     navigate('/login');
   };
 
   return (
-    <nav className="navbar navbar-expand-lg bg-color fixed-top" >
+    <nav className="navbar navbar-expand-lg bg-color fixed-top">
       <div className="container-fluid">
-        <Link className="navbar-brand bg-color"  to="/">NewsHub</Link>
+        <Link className="navbar-brand bg-color" to="/">NewsHub</Link>
 
         <button
           className="navbar-toggler"
-          
           type="button"
           onClick={toggleDropdown1}
           aria-expanded={dropdownOpen1 ? 'true' : 'false'}
           aria-label="Toggle navigation"
-          style={{ backgroundColor: 'rgb(130, 106, 251)', color: 'white', paddingTop: '10px' }}>
+          style={{ backgroundColor: 'rgb(130, 106, 251)', color: 'white', paddingTop: '10px' }}
+        >
           <span className="navbar-toggler-icon"></span>
         </button>
 
@@ -63,12 +66,17 @@ const NavBar = ({ user, onLogout }) => {
             <li className="nav-item">
               <Link className="nav-link" style={{ color: 'white' }} to="/technology">Technology</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" style={{ color: 'white' }} to="/NewsList">NewsList</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" style={{ color: 'white' }} to="/NewsData">Newsdetails</Link>
-            </li>
+
+            {userRole === "Admin" && (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" style={{ color: 'white' }} to="/NewsList">NewsList</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" style={{ color: 'white' }} to="/NewsData">NewsDetails</Link>
+                </li>
+              </>
+            )}
           </ul>
 
           <ul className="navbar-nav ml-auto">

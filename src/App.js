@@ -1,4 +1,3 @@
-// App.js
 import React, { Component } from 'react';
 import './App.css';
 import NavBar from './components/NavBar';
@@ -18,12 +17,15 @@ import Update from './components/Update';
 import NewsDetails from './components/NewsDetails';
 import InsertNewsData from './components/InsertNewsData';
 import UpdateNewsData from './components/Updatenewsdata';
-
+import AdminNav from './components/AdminNav';
+import ProtectedRoute from './components/ProtectedRoute'; 
+import ProtectedRoute1 from './components/ProtectedRoute1'; 
 export default class App extends Component {
   
   state = {
     progress: 0,
     firstName: sessionStorage.getItem('firstname') || '',
+    role: sessionStorage.getItem('role') || '' // Add role to state
   };
 
   setProgress = (progress) => {
@@ -33,46 +35,58 @@ export default class App extends Component {
   setFirstName = (firstName) => {
     this.setState({ firstName });
   };
- 
+
+  setRole = (role) => {
+    this.setState({ role });
+  };
+
+  handleLogout = () => {
+    sessionStorage.clear();
+    this.setState({ firstName: '', role: '' }); // Clear state on logout
+  };
 
   render() {
+    const { firstName, role } = this.state;
+    const isLoggedIn = sessionStorage.getItem('firstname') !== '' && sessionStorage.getItem('firstname') !== null;
     return (
-      <div>
+      
         <Router>
-          <NavBar user={this.state.firstName} onLogout={() => this.setState({ firstName: '' })}  /> <br></br><br></br>
-          <LoadingBar
-            height={3}
-            color='#FF3377'
-            progress={this.state.progress}
-          />
-          <Routes>
-            <Route path='/' element={<News setProgress={this.setProgress} key='general' pageSize={8} country='us' category='general' />} />
-            <Route path='/about' element={<About />} />
-            <Route path='/business' element={<News setProgress={this.setProgress} key='business' pageSize={8} country='us' category='business' />} />
-            <Route path='/entertainment' element={<News setProgress={this.setProgress} key='entertainment' pageSize={8} country='us' category='entertainment' />} />
-            <Route path='/health' element={<News setProgress={this.setProgress} key='health' pageSize={8} country='us' category='health' />} />
-            <Route path='/science' element={<News setProgress={this.setProgress} key='science' pageSize={8} country='us' category='science' />} />
-            <Route path='/sports' element={<News setProgress={this.setProgress} key='sports' pageSize={8} country='us' category='sports' />} />
-            <Route path='/technology' element={<News setProgress={this.setProgress} key='technology' pageSize={8} country='us' category='technology' />} />
-            <Route path='/regis' element={<Registaration />} />
-            <Route path='/regis1' element={<Regis1 />} />
-            <Route path='/login' element={<Login1 setFirstName={this.setFirstName} />} /> 
-            <Route path='/login11' element={<Red />} />
-            <Route path='/Data' element={<TabalData />} />
-            <Route path='/Desc' element={<Desc />} />
-            <Route path='/NewsList' element={<NewsList></NewsList>} />
-            <Route path='/insertdata' element={<Insertdata></Insertdata>} />
-            <Route path='/Updatedata' element={<Update></Update>} />
-           
-        <Route exact path="/" component={NewsList} />
-        <Route path="/update/:id" element={<Update />} />
-        <Route path='/NewsData' element={<NewsDetails></NewsDetails>} />
-        <Route path='/InserNewsdata1' element={<InsertNewsData></InsertNewsData>} />
-        {/* <Route path='/UpdateNewsData' element={<UpdateNewsData></UpdateNewsData>} /> */}
-        <Route path="/UpdateNewsData/:id" element={<UpdateNewsData />} />
-          </Routes>
-        </Router>
-      </div>
+      
+          <NavBar user={firstName} onLogout={this.handleLogout} userRole={role} />
+       
+        <LoadingBar
+          height={3}
+          color='#FF3377'
+          progress={this.state.progress}
+        />
+        <Routes>
+          <Route path='/login' element={<Login1 setFirstName={this.setFirstName} setRole={this.setRole} />} />
+          
+          {/* Public Routes */}
+          <Route path='/' element={<News setProgress={this.setProgress} key='general' pageSize={8} country='us' category='general' />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/business' element={<News setProgress={this.setProgress} key='business' pageSize={8} country='us' category='business' />} />
+          <Route path='/entertainment' element={<News setProgress={this.setProgress} key='entertainment' pageSize={8} country='us' category='entertainment' />} />
+          <Route path='/health' element={<News setProgress={this.setProgress} key='health' pageSize={8} country='us' category='health' />} />
+          <Route path='/science' element={<News setProgress={this.setProgress} key='science' pageSize={8} country='us' category='science' />} />
+          <Route path='/sports' element={<News setProgress={this.setProgress} key='sports' pageSize={8} country='us' category='sports' />} />
+          <Route path='/technology' element={<News setProgress={this.setProgress} key='technology' pageSize={8} country='us' category='technology' />} />
+          <Route path='/regis' element={<Registaration />} />
+          <Route path='/regis1' element={<Regis1 />} />
+          <Route path='/login11' element={<Red />} />
+
+          {/* Protected Routes */}
+          <Route path='/Data' element={<ProtectedRoute element={TabalData} userRole={role} />} />
+          <Route path='/Desc' element={<ProtectedRoute element={Desc} userRole={role} />} />
+          {/* <Route path="/desc" element={<ProtectedRoute1 element={Desc} userRole={role}/>} /> */}
+          <Route path='/NewsList' element={<ProtectedRoute element={NewsList} userRole={role} />} />
+          <Route path='/insertdata' element={<ProtectedRoute element={Insertdata} userRole={role} />} />
+          <Route path='/Updatedata/:id' element={<ProtectedRoute element={Update} userRole={role} />} />
+          <Route path='/NewsData' element={<ProtectedRoute element={NewsDetails} userRole={role} />} />
+          <Route path='/InserNewsdata1' element={<ProtectedRoute element={InsertNewsData} userRole={role} />} />
+          <Route path="/UpdateNewsData/:id" element={<ProtectedRoute element={UpdateNewsData} userRole={role} />} />
+        </Routes>
+      </Router>
     );
   }
 }

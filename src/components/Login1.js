@@ -1,19 +1,15 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {jwtDecode} from 'jwt-decode';
 
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import NavBar from './NavBar';
-
-const Login1 = ({ setFirstName }) => {
+const Login1 = ({ setFirstName, setRole }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
   const [errors, setErrors] = useState({});
-useEffect(()=>{
-  sessionStorage.clear();
-},[]);
- const [role,setRole]=useState();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -24,7 +20,6 @@ useEffect(()=>{
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const newErrors = validateForm(formData);
     setErrors(newErrors);
 
@@ -34,45 +29,41 @@ useEffect(()=>{
         const data = await response.json();
 
         if (response.ok) {
-          console.log('Login successful:', data);
-         
-          sessionStorage.setItem('firstname', data.userName); 
-    setFirstName(data.userName); // Set firstName using setFirstName prop
-    // setRole(data.role);
+          const token = data.token;
+          const decodedToken = jwtDecode(token);
+
+          sessionStorage.setItem('token', token); // Store token in sessionStorage
+          sessionStorage.setItem('firstname', decodedToken.unique_name);
+          sessionStorage.setItem('role', decodedToken.role);
+          setFirstName(decodedToken.unique_name);
+          setRole(decodedToken.role);
+ console.log(token)
+          console.log('Login successful, navigating to /desc'); // Debugging log
           alert("Login successfully");
-        if(setRole(data.role) == "Admin")
-        {
-           navigate('/Desc');
-        }
-        else {
           navigate('/Desc');
-        }
-          // navigate('/Desc');
         } else {
           console.error('Login failed:', data);
           setErrors({ password: 'Invalid username or password' });
         }
       } catch (error) {
-        console.error('Invalid username or password:', error);
+        console.error('Login error:', error);
         setErrors({ password: 'Invalid username or password' });
       }
-    } else {
-      console.log('Form submission failed due to validation errors.');
-      alert("Form Submission due to Validation Error");
     }
   };
 
   const validateForm = (data) => {
     const errors = {};
-
-    if (!data.email) {
-      errors.email = 'Email is required';
-    }
-    if (!data.password) {
-      errors.password = 'Password is required';
-    }
-
+    if (!data.email) errors.email = 'Email is required';
+    if (!data.password) errors.password = 'Password is required';
     return errors;
+  };
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    setFirstName('');
+    setRole('');
+    navigate('/login'); // Navigate to login or home page
   };
 
   return (
@@ -82,7 +73,7 @@ useEffect(()=>{
           <center>
             <header style={{ fontSize: '250%' }}>Login Form</header>
           </center>
-          <form action="#" className="form" onSubmit={handleSubmit}>
+          <form className="form" onSubmit={handleSubmit}>
             <div className="input-box">
               <label>Email Address</label>
               <input
@@ -96,7 +87,6 @@ useEffect(()=>{
               />
               {errors.email && <span className="error-message" style={{ color: 'red' }}>{errors.email}</span>}
             </div>
-
             <div className="input-box">
               <label>Password</label>
               <input
@@ -110,28 +100,12 @@ useEffect(()=>{
               />
               {errors.password && <span className="error-message" style={{ color: 'red' }}>{errors.password}</span>}
             </div>
-            <br />
-            <div className="check_box">
-              <input type="checkbox" />
-              <span>Remember me</span>
-            </div>
-            <div className="forget_div">
-              <a href="#">Forgot password?</a>
-            </div>
             <button type="submit">Login</button>
-            <br />
-            <div className="sign_up">
-              Not a member? <Link to="/regis1">Signup now</Link>
-            </div>
           </form>
-          {/* Display firstName here */}
-          {/* <h1 color="white">Welcome : {firstName}</h1> */}
         </section>
-       {role}
       </div>
     </div>
   );
 };
 
 export default Login1;
-

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import defaultImage from '../assets/img1.jpg'; 
 const Desc = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -90,6 +90,10 @@ const Desc = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
+  const handleImageError = (e) => {
+ 
+    e.target.src =   defaultImage; 
+  };
 
   return (
     <div className="container">
@@ -108,6 +112,7 @@ const Desc = () => {
       <center><img
         src={img}
         alt="Article"
+        onError={handleImageError } 
         className="img-fluid"
       /></center>
       <br></br>

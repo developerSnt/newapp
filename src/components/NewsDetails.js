@@ -44,7 +44,7 @@ export default function NewsDetails() {
 
   return (
     <div className="container-fluid">
-      <center><h1>Admin Panel</h1></center>
+      <center><h1>News Details</h1></center>
       <br />
       <hr /><hr />
       <br /><br />

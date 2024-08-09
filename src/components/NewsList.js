@@ -14,7 +14,7 @@ const NewsList = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('https://localhost:7299/api/NewList');
+      const response = await fetch(`http://coreapi.sntservices.in/api/NewList`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -29,7 +29,7 @@ const NewsList = () => {
   };
 
   const handleUpdateClick = (item) => {
-    navigate(`/update/${item.id}`, { state: { selectedItem: item } });
+    navigate(`/Updatedata/${item.id}`, { state: { selectedItem: item } });
   };
 
   const handleDeleteClick = async (id) => {
@@ -58,7 +58,8 @@ const NewsList = () => {
   return (
     <div className="container-fluid">
       <div className="text-center mt-4">
-        <h1>Admin Panel</h1>
+        <br></br><br></br>
+        <h1>News List</h1>
         <Link to="/insertdata">
           <button type="button" className="btn btn-primary mt-3">Insert New Data</button>
         </Link>
