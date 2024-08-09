@@ -11,7 +11,7 @@ const Update = () => {
     elementId: '',
     domion: '',
   });
-
+  const localUrl1 = process.env.REACT_APP_LOCAL_URL;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSelectedItem({
@@ -28,7 +28,7 @@ const Update = () => {
    
     if (Object.keys(newErrors).length === 0) {
       try {
-              const response = await fetch(`https://localhost:7299/api/update/${encodeURIComponent(selectedItem.id)}?name=${encodeURIComponent(selectedItem.source)}&elementclass=${encodeURIComponent(selectedItem.elementClass)}&elementid=${encodeURIComponent(selectedItem.elementId)}&domion=${encodeURIComponent(selectedItem.domion)}&url=${encodeURIComponent(selectedItem.url)}`, {
+              const response = await fetch(`${localUrl1}/api/update/${encodeURIComponent(selectedItem.id)}?name=${encodeURIComponent(selectedItem.source)}&elementclass=${encodeURIComponent(selectedItem.elementClass)}&elementid=${encodeURIComponent(selectedItem.elementId)}&domion=${encodeURIComponent(selectedItem.domion)}&url=${encodeURIComponent(selectedItem.url)}`, {
           method: 'PUT', 
           headers: {
             'Content-Type': 'application/json',

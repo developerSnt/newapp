@@ -6,14 +6,14 @@ export default function NewsDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+const localUrl1 = process.env.REACT_APP_LOCAL_URL;
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const response = await fetch('https://localhost:7299/api/NewDatas');
+      const response = await fetch(`${localUrl1}/api/NewDatas`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -29,7 +29,7 @@ export default function NewsDetails() {
 
   const handleDeleteClick = async (id) => {
     try {
-      const response = await fetch(`https://localhost:7299/api/Deletenews/${id}`, {
+      const response = await fetch(`${localUrl1}/api/Deletenews/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {

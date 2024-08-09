@@ -12,7 +12,7 @@ const Desc = () => {
   const [Date1, setDate] = useState('');
   const [img, setImg] = useState('');
   const usenavigate = useNavigate();
-
+  const localUrl1 = process.env.REACT_APP_LOCAL_URL;
   useEffect(() => {
     let firstname = sessionStorage.getItem('firstname');
     if (firstname === '' || firstname === null) {
@@ -41,7 +41,7 @@ const Desc = () => {
 
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://localhost:7299/api/Detailsview?url=${encodeURIComponent(paramUrl)}&name=${encodeURIComponent(paramName)}`);
+        const response = await fetch(`${localUrl1}/api/Detailsview?url=${encodeURIComponent(paramUrl)}&name=${encodeURIComponent(paramName)}`);
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
@@ -61,7 +61,7 @@ const Desc = () => {
   const handlePrint = async () => {
     try {
     
-      const response = await fetch(`https://localhost:7299/createpdf?title=${encodeURIComponent(tital)}&description=${encodeURIComponent(content)}&date=${encodeURIComponent(Date1)}&imageUrl=${encodeURIComponent(img)}`, {
+      const response = await fetch(`${localUrl1}/createpdf?title=${encodeURIComponent(tital)}&description=${encodeURIComponent(content)}&date=${encodeURIComponent(Date1)}&imageUrl=${encodeURIComponent(img)}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

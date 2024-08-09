@@ -7,14 +7,14 @@ const NewsList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+  const localUrl1 = process.env.REACT_APP_LOCAL_URL;
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://coreapi.sntservices.in/api/NewList`);
+      const response = await fetch(`https://coreapi.sntservices.in/api/NewList`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -34,7 +34,7 @@ const NewsList = () => {
 
   const handleDeleteClick = async (id) => {
     try {
-      const response = await fetch(`https://localhost:7299/api/Delete/${id}`, {
+      const response = await fetch(`${localUrl1}/api/Delete/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {

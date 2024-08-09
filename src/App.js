@@ -20,8 +20,9 @@ import UpdateNewsData from './components/Updatenewsdata';
 import AdminNav from './components/AdminNav';
 import ProtectedRoute from './components/ProtectedRoute'; 
 import ProtectedRoute1 from './components/ProtectedRoute1'; 
+import Demo from './components/Demo';
 export default class App extends Component {
-  
+  localourl = "https://localhost:7299"
   state = {
     progress: 0,
     firstName: sessionStorage.getItem('firstname') || '',
@@ -74,7 +75,8 @@ export default class App extends Component {
           <Route path='/regis' element={<Registaration />} />
           <Route path='/regis1' element={<Regis1 />} />
           <Route path='/login11' element={<Red />} />
-
+          <Route path='/demo' element={<Demo />} />
+         
           {/* Protected Routes */}
           <Route path='/Data' element={<ProtectedRoute element={TabalData} userRole={role} />} />
           <Route path='/Desc' element={<ProtectedRoute element={Desc} userRole={role} />} />
@@ -82,7 +84,7 @@ export default class App extends Component {
           <Route path='/NewsList' element={<ProtectedRoute element={NewsList} userRole={role} />} />
           <Route path='/insertdata' element={<ProtectedRoute element={Insertdata} userRole={role} />} />
           <Route path='/Updatedata/:id' element={<ProtectedRoute element={Update} userRole={role} />} />
-          <Route path='/NewsData' element={<ProtectedRoute element={NewsDetails} userRole={role} />} />
+          <Route path='/NewsData' element={<ProtectedRoute element={NewsDetails}  userRole={role} />} />
           <Route path='/InserNewsdata1' element={<ProtectedRoute element={InsertNewsData} userRole={role} />} />
           <Route path="/UpdateNewsData/:id" element={<ProtectedRoute element={UpdateNewsData} userRole={role} />} />
         </Routes>

@@ -9,6 +9,7 @@ const Login1 = ({ setFirstName, setRole }) => {
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const localUrl1 = process.env.REACT_APP_LOCAL_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,7 +26,7 @@ const Login1 = ({ setFirstName, setRole }) => {
 
     if (Object.keys(newErrors).length === 0) {
       try {
-        const response = await fetch(`https://localhost:7299/api/Login?email=${encodeURIComponent(formData.email)}&password=${encodeURIComponent(formData.password)}`);
+        const response = await fetch(`${localUrl1}/api/Login?email=${encodeURIComponent(formData.email)}&password=${encodeURIComponent(formData.password)}`);
         const data = await response.json();
 
         if (response.ok) {

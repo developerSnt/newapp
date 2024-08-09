@@ -1,11 +1,11 @@
 import axios from 'axios';
-
-const API_URL = 'https://localhost:7202/api/data';
-const API_URL1 = 'https://localhost:7299/api/Registration';
-const API_URL2 = 'https://localhost:7299/api/NewsList';
-const API_URL3 = 'https://localhost:7299/api/insetdatainfo';
-const API_URL4 = 'https://localhost:7299/api/insetdatainfo';
-const API_URL5 = 'https://localhost:7299/api/InsertnewData1';
+const localUrl1 = process.env.REACT_APP_LOCAL_URL;
+const API_URL = `${localUrl1}/api/data`;
+const API_URL1 = `${localUrl1}/api/Registration`;
+const API_URL2 = `${localUrl1}/api/NewsList`;
+const API_URL3 = `${localUrl1}/api/insetdatainfo`;
+const API_URL4 = `${localUrl1}/api/insetdatainfo`;
+const API_URL5 = `${localUrl1}/api/InsertnewData1`;
 const apiService = {
   async fetchData() {
     try {

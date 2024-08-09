@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css'; // Import the styles for da
 
 export default function InsertNewsData() {
     const [formData, setFormData] = useState({
-        title: '', // Fixed typo from 'tital' to 'title'
+        tital: '', // Fixed typo from 'tital' to 'title'
         date: new Date(), // Initialize with current date or a default date
         imageurl: '',
         description: '',
@@ -50,7 +50,7 @@ export default function InsertNewsData() {
                 console.log('Created data:', createdData);
 
                 setFormData({
-                    title: '', // Fixed typo
+                    tital: '', // Fixed typo
                     date: new Date(),
                     imageurl: '',
                     description: '',
@@ -69,8 +69,8 @@ export default function InsertNewsData() {
 
     const validateForm = (formData) => {
         let errors = {};
-        if (!formData.title) { // Fixed typo
-            errors.title = 'Title is required'; // Fixed typo
+        if (!formData.tital) { // Fixed typo
+            errors.tital = 'Title is required'; // Fixed typo
         }
         if (!formData.date) {
             errors.date = 'Date is required';
@@ -86,14 +86,14 @@ export default function InsertNewsData() {
                     <label htmlFor="title">Title</label>
                     <input
                         type="text"
-                        name="title" // Fixed typo
-                        id="title"
-                        className={`form-control ${errors.title ? 'is-invalid' : ''}`} // Fixed typo
-                        value={formData.title} // Fixed typo
+                        name="tital" // Fixed typo
+                        id="tital"
+                        className={`form-control ${errors.tital ? 'is-invalid' : ''}`} // Fixed typo
+                        value={formData.tital} // Fixed typo
                         onChange={handleChange}
                         placeholder="Enter title"
                     />
-                    <div className="invalid-feedback">{errors.title}</div> {/* Fixed typo */}
+                    <div className="invalid-feedback">{errors.tital}</div> {/* Fixed typo */}
                 </div>
 
                 <div className="form-group mb-3">

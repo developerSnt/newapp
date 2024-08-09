@@ -46,7 +46,7 @@ const UpdateNewsData = () => {
       fetchData();
     }
   }, [id]);
-
+  const localUrl1 = process.env.REACT_APP_LOCAL_URL;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData(prevData => ({ ...prevData, [name]: value }));
@@ -64,7 +64,7 @@ const UpdateNewsData = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`https://localhost:7299/api/updatenewdata/${encodeURIComponent(data.id)}?tital=${encodeURIComponent(data.tital)}&date=${encodeURIComponent(data.date)}&imageurl=${encodeURIComponent(data.imageurl)}&description=${encodeURIComponent(data.description)}`, {
+      const response = await fetch(`${localUrl1}/api/updatenewdata/${encodeURIComponent(data.id)}?tital=${encodeURIComponent(data.tital)}&date=${encodeURIComponent(data.date)}&imageurl=${encodeURIComponent(data.imageurl)}&description=${encodeURIComponent(data.description)}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
