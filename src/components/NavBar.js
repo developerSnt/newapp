@@ -66,10 +66,7 @@ const NavBar = ({ user, userRole, onLogout }) => {
             <li className="nav-item">
               <Link className="nav-link" style={{ color: 'white' }} to="/technology">Technology</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" style={{ color: 'white' }} to="/demo">demo</Link>
-            </li>
-
+        
             {userRole === "Admin" && (
               <>
                 <li className="nav-item">
