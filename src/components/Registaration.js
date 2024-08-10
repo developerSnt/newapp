@@ -34,7 +34,7 @@ export default function Registration() {
   const handleOptionChange1 = (event) => {
     setSelectedOption1(event.target.value);
   };
-
+  const localUrl1 = process.env.REACT_APP_URL;
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -64,7 +64,7 @@ export default function Registration() {
         redirect: "follow"
       };
       
-      fetch("https://localhost:7202/api/Registration", requestOptions)
+      fetch(`${localUrl1}/api/Registration`, requestOptions)
         .then((response) => response.text())
         .then((result) => console.log(result))
         .catch((error) => console.error(error));

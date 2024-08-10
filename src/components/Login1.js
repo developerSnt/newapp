@@ -9,7 +9,7 @@ const Login1 = ({ setFirstName, setRole }) => {
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  const localUrl1 = process.env.REACT_APP_LOCAL_URL;
+  const localUrl1 = process.env.REACT_APP_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;

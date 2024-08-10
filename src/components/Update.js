@@ -11,7 +11,7 @@ const Update = () => {
     elementId: '',
     domion: '',
   });
-  const localUrl1 = process.env.REACT_APP_LOCAL_URL;
+  const localUrl1 = process.env.REACT_APP_URL;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSelectedItem({

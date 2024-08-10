@@ -7,14 +7,14 @@ const NewsList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const localUrl1 = process.env.REACT_APP_LOCAL_URL;
+  const localUrl1 = process.env.REACT_APP_URL;
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const response = await fetch(` /api/NewList`);
+      const response = await fetch(`${localUrl1}/api/NewList`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }

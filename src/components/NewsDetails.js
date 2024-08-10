@@ -6,7 +6,7 @@ export default function NewsDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-const localUrl1 = process.env.REACT_APP_LOCAL_URL;
+const localUrl1 = process.env.REACT_APP_URL;
   useEffect(() => {
     fetchData();
   }, []);

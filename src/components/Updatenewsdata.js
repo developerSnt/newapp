@@ -18,12 +18,12 @@ const UpdateNewsData = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const localUrl1 = process.env.REACT_APP_URL;
   useEffect(() => {
     if (id) {
       const fetchData = async () => {
         try {
-          const response = await fetch(`https://localhost:7299/api/NewDatas1/${id}`);
+          const response = await fetch(`${localUrl1}/api/NewDatas1/${id}`);
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
@@ -46,7 +46,7 @@ const UpdateNewsData = () => {
       fetchData();
     }
   }, [id]);
-  const localUrl1 = process.env.REACT_APP_LOCAL_URL;
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData(prevData => ({ ...prevData, [name]: value }));
