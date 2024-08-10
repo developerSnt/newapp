@@ -12,7 +12,7 @@ const Desc = () => {
   const [Date1, setDate] = useState('');
   const [img, setImg] = useState('');
   const usenavigate = useNavigate();
-  const localUrl1 = process.env.REACT_APP_LOCAL_URL;
+  const localUrl1 = process.env.REACT_APP_URL;
   useEffect(() => {
     let firstname = sessionStorage.getItem('firstname');
     if (firstname === '' || firstname === null) {

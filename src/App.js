@@ -22,7 +22,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import ProtectedRoute1 from './components/ProtectedRoute1'; 
 import Demo from './components/Demo';
 export default class App extends Component {
-  localourl = "https://localhost:7299"
+
   state = {
     progress: 0,
     firstName: sessionStorage.getItem('firstname') || '',
